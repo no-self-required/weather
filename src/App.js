@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import Weather from "./components/weather";
+import Searchbox from "./components/searchbox";
 import axios from "axios";
 
 const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
@@ -18,9 +18,10 @@ function App() {
     });
 
   return (
-    <div className="navbar">
-      weather
-      <Weather></Weather>
+    <div className="app">
+      <main>
+        <Searchbox></Searchbox>
+      </main>  
     </div>
   );
 }

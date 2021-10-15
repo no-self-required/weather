@@ -1,6 +1,3 @@
-const key = process.env.owKey 
-
-
 
 export default function Weather() {
   return (

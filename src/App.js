@@ -8,10 +8,44 @@ const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Toronto&appid=
 
 function App() {
 
+  const datebuilder = (d) => {
+    let months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    let day = days[d.getDay()];
+    let date = d.getDate();
+    let month = months[d.getMonth()];
+    let year  = d.getFullYear();
+
+    return `${day} ${date} ${month} ${year}`
+  };
+
   axios
     .get(apiUrl)
     .then(function (response) {
-      console.log(response)
+      console.log(response);
     })
     .catch(function (error) {
       console.error(error);
@@ -21,7 +55,11 @@ function App() {
     <div className="app">
       <main>
         <Searchbox></Searchbox>
-      </main>  
+        <div className="location-time">
+          <div className="location">Toronto</div>
+          <div className="date">{datebuilder(new Date())}</div>
+        </div>
+      </main>
     </div>
   );
 }

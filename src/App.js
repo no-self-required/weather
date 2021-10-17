@@ -81,7 +81,7 @@ function App() {
             <div className='weatherbox'>
               <div className='temp'>
                 temp: 
-                {weather.main.temp}
+                { (weather.main.temp - 273.15).toFixed() }
               </div>
               <div className='weatherType'>
                 {weather.weather[0].main}

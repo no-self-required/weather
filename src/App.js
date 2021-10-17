@@ -15,12 +15,13 @@ function App() {
       fetch(`${apiBaseUrl}weather?q=${query}&appid=${apiKey}`)
         .then((res) => res.json())
         .then((result) => {
-          setQuery('');
+          setQuery("");
           setWeather(result);
           console.log(result);
         });
     }
   };
+
   const datebuilder = (d) => {
     let months = [
       "January",
@@ -55,6 +56,7 @@ function App() {
     return `${day} ${date} ${month} ${year}`;
   };
 
+  console.log("WEATHER NAME---", weather.visibility);
   return (
     <div className="app">
       <main>
@@ -63,15 +65,32 @@ function App() {
             type="text"
             className="search-bar"
             placeholder="Enter a city"
-            onChange={e => setQuery(e.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
             value={query}
             onKeyPress={search}
           ></input>
         </div>
-        <div className="location-time">
-          <div className="location">Toronto</div>
-          <div className="date">{datebuilder(new Date())}</div>
-        </div>
+        {typeof weather.main != "undefined" ? (
+          <div>
+            <div className="location-time">
+              <div className="location">
+                {weather.name}, {weather.sys.country}
+              </div>
+              <div className="date">{datebuilder(new Date())}</div>
+            </div>
+            <div className='weatherbox'>
+              <div className='temp'>
+                temp: 
+                {weather.main.temp}
+              </div>
+              <div className='weatherType'>
+                {weather.weather[0].main}
+              </div>  
+            </div>  
+          </div>
+        ) : (
+          ""
+        )}
       </main>
     </div>
   );

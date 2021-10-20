@@ -12,7 +12,7 @@ function App() {
 
   const search = (evt) => {
     if (evt.key === "Enter") {
-      fetch(`${apiBaseUrl}forecast?q=${query}&appid=${apiKey}`)
+      fetch(`${apiBaseUrl}weather?q=${query}&appid=${apiKey}`)
         .then((res) => res.json())
         .then((result) => {
           setQuery("");
@@ -71,7 +71,7 @@ function App() {
           ></input>
         </div>
         {typeof weather.main != "undefined" ? (
-          <div>
+          <div id="info-box">
             <div className="location-time">
               <div className="location">
                 {weather.name}, {weather.sys.country}

@@ -1,0 +1,9 @@
+#info-box {
+  border: 1px solid black;
+  width: 13em;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+}

@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import Searchbox from "./components/searchbox";
 // import axios from "axios";
 
@@ -8,7 +8,7 @@ const apiBaseUrl = `https://api.openweathermap.org/data/2.5/`;
 
 function App() {
   const [query, setQuery] = useState("");
-  const [weather, setWeather] = useState({});
+  const [weather, setWeather] = useState([]);
 
   const search = (evt) => {
     if (evt.key === "Enter") {
@@ -17,11 +17,10 @@ function App() {
         .then((result) => {
           setQuery("");
           setWeather(result);
-          console.log(result);
+          console.log(result)
         });
     }
   };
-
   const datebuilder = (d) => {
     let months = [
       "January",
@@ -56,7 +55,6 @@ function App() {
     return `${day} ${date} ${month} ${year}`;
   };
 
-  console.log("WEATHER list[0]---", weather.list[0]);
   return (
     <div className="app">
       <main>
@@ -78,15 +76,13 @@ function App() {
               </div>
               <div className="date">{datebuilder(new Date())}</div>
             </div>
-            <div className='weatherbox'>
-              <div className='temp'>
-                temp: 
-                { (weather.main.temp - 273.15).toFixed() }
+            <div className="weatherbox">
+              <div className="temp">
+                temp:
+                {(weather.main.temp - 273.15).toFixed()}
               </div>
-              <div className='weatherType'>
-                {weather.weather[0].main}
-              </div>  
-            </div>  
+              <div className="weatherType">{weather.weather[0].main}</div>
+            </div>
           </div>
         ) : (
           ""

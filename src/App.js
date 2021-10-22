@@ -12,7 +12,7 @@ function App() {
 
   const search = (evt) => {
     if (evt.key === "Enter") {
-      fetch(`${apiBaseUrl}weather?q=${query}&appid=${apiKey}`)
+      fetch(`${apiBaseUrl}forecast?q=${query}&appid=${apiKey}`)
         .then((res) => res.json())
         .then((result) => {
           setQuery("");
@@ -56,7 +56,7 @@ function App() {
     return `${day} ${date} ${month} ${year}`;
   };
 
-  console.log("WEATHER NAME---", weather.visibility);
+  console.log("WEATHER list[0]---", weather.list[0]);
   return (
     <div className="app">
       <main>

@@ -1,7 +1,13 @@
 import "./App.css";
 import React, { useState } from "react";
-// import Searchbox from "./components/searchbox";
-// import axios from "axios";
+
+import "./styles/info-box.scss";
+
+import Searchbox from "./components/Searchbox";
+import LocationTimeType from "./components/LocationTimeType";
+import TopWeatherInfo from "./components/TopWeatherInfo";
+import Graph from "./components/Graph";
+import SingleDay from "./components/SingleDay";
 
 const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 const apiBaseUrl = `https://api.openweathermap.org/data/2.5/`;
@@ -17,10 +23,11 @@ function App() {
         .then((result) => {
           setQuery("");
           setWeather(result);
-          console.log(result)
+          console.log(result);
         });
     }
   };
+
   const datebuilder = (d) => {
     let months = [
       "January",
@@ -58,31 +65,25 @@ function App() {
   return (
     <div className="app">
       <main>
-        <div className="searchbox">
-          <input
-            type="text"
-            className="search-bar"
-            placeholder="Enter a city"
-            onChange={(e) => setQuery(e.target.value)}
-            value={query}
-            onKeyPress={search}
-          ></input>
-        </div>
-        {typeof weather.main != "undefined" ? (
-          <div id="info-box">
-            <div className="location-time">
-              <div className="location">
-                {weather.name}, {weather.sys.country}
-              </div>
-              <div className="date">{datebuilder(new Date())}</div>
+        <Searchbox 
+        query={query}
+        setQuery={setQuery}
+        search={search}
+        />
+        {typeof weather.city != "undefined" ? (
+          <div className="info-box">
+            <div className="topBox">
+              <LocationTimeType 
+                weather={weather}
+                datebuilder={datebuilder}
+              />  
+              <TopWeatherInfo
+                weather={weather}
+              />
             </div>
-            <div className="weatherbox">
-              <div className="temp">
-                temp:
-                {(weather.main.temp - 273.15).toFixed()}
-              </div>
-              <div className="weatherType">{weather.weather[0].main}</div>
-            </div>
+            <Graph />
+            <SingleDay             
+            />
           </div>
         ) : (
           ""
@@ -93,12 +94,3 @@ function App() {
 }
 
 export default App;
-
-// axios
-// .get(apiUrl)
-// .then(function (response) {
-//   console.log(response);
-// })
-// .catch(function (error) {
-//   console.error(error);
-// });

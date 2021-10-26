@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
 
-import "./styles/info-box.scss";
+import "./styles/Weatherbox.scss";
 
 import Searchbox from "./components/Searchbox";
 import LocationTimeType from "./components/LocationTimeType";
@@ -12,6 +12,8 @@ import SingleDay from "./components/SingleDay";
 const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 const apiBaseUrl = `https://api.openweathermap.org/data/2.5/`;
 
+//Change api call to one API call
+//Use another api to get coords for api query
 function App() {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState([]);

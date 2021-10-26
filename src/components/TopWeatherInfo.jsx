@@ -1,11 +1,12 @@
+import "../styles/InfoBox.scss"
+
 function TopWeatherInfo({ weather }) {
   return (
     <div className="weatherbox">
       <div>weather ico here</div>
       <div id="tempCFbox">
         <div className="temp">
-          temp:
-          {(weather.list[0].main.temp - 273.15).toFixed()} °C
+          {(weather.list[0].main.temp - 273.15).toFixed()} 
         </div>
         <div id="CFswitch">°C | °F</div>
       </div>

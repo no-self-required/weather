@@ -11,23 +11,38 @@ import SingleDay from "./components/SingleDay";
 
 const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 const apiBaseUrl = `https://api.openweathermap.org/data/2.5/`;
-
+const apiBaseCoords = `http://api.openweathermap.org/geo/1.0/`;
 //Change api call to one API call
 //Use another api to get coords for api query
 function App() {
   const [query, setQuery] = useState("");
+  const [coords, setCoords] = useState([]);
   const [weather, setWeather] = useState([]);
 
-  const search = (evt) => {
+  const getCoords = (evt) => {
     if (evt.key === "Enter") {
-      fetch(`${apiBaseUrl}forecast?q=${query}&appid=${apiKey}`)
+      fetch(`${apiBaseCoords}direct?q=${query}&appid=${apiKey}`)
         .then((res) => res.json())
         .then((result) => {
           setQuery("");
-          setWeather(result);
+          setCoords(result);
           console.log(result);
-        });
+        })
+        .then(() => {
+          search();
+        })
     }
+  };
+
+  const search = () => {
+    fetch(
+      `${apiBaseUrl}onecall?lat=${coords[0].lat}&lon=${coords[0].lon}&appid=${apiKey}`
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setWeather(result);
+        console.log(result);
+      });
   };
 
   const datebuilder = (d) => {
@@ -67,25 +82,15 @@ function App() {
   return (
     <div className="app">
       <main>
-        <Searchbox 
-        query={query}
-        setQuery={setQuery}
-        search={search}
-        />
+        <Searchbox query={query} setQuery={setQuery} getCoords={getCoords} />
         {typeof weather.city != "undefined" ? (
           <div className="info-box">
             <div className="topBox">
-              <LocationTimeType 
-                weather={weather}
-                datebuilder={datebuilder}
-              />  
-              <TopWeatherInfo
-                weather={weather}
-              />
+              <LocationTimeType weather={weather} datebuilder={datebuilder} />
+              <TopWeatherInfo weather={weather} />
             </div>
             <Graph />
-            <SingleDay             
-            />
+            <SingleDay />
           </div>
         ) : (
           ""

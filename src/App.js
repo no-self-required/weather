@@ -12,8 +12,8 @@ import SingleDay from "./components/SingleDay";
 const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 const apiBaseUrl = `https://api.openweathermap.org/data/2.5/`;
 const apiBaseCoords = `http://api.openweathermap.org/geo/1.0/`;
-//Change api call to one API call
-//Use another api to get coords for api query
+
+//checkout await, async , promises for api call
 function App() {
   const [query, setQuery] = useState("");
   const [coords, setCoords] = useState([]);

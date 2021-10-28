@@ -1,5 +1,6 @@
 import "./App.css";
 import React, { useState } from "react";
+import axios from "axios";
 
 import "./styles/Weatherbox.scss";
 
@@ -13,35 +14,37 @@ const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 const apiBaseUrl = `https://api.openweathermap.org/data/2.5/`;
 const apiBaseCoords = `http://api.openweathermap.org/geo/1.0/`;
 
-//checkout await, async , promises for api call
 function App() {
   const [query, setQuery] = useState("");
   const [coords, setCoords] = useState([]);
   const [weather, setWeather] = useState([]);
 
-  const getCoords = (evt) => {
-    if (evt.key === "Enter") {
-      fetch(`${apiBaseCoords}direct?q=${query}&appid=${apiKey}`)
-        .then((res) => res.json())
-        .then((result) => {
+  const getCoords = (e) => {
+    if (e.key === "Enter") {
+      axios
+        .get(`${apiBaseCoords}direct?q=${query}&appid=${apiKey}`)
+        .then(function (response) {
           setQuery("");
-          setCoords(result);
-          console.log(result);
+          setCoords(response);
+          console.log("COORDS----", coords);
         })
-        .then(() => {
-          search();
-        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
 
   const search = () => {
-    fetch(
-      `${apiBaseUrl}onecall?lat=${coords[0].lat}&lon=${coords[0].lon}&appid=${apiKey}`
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        setWeather(result);
-        console.log(result);
+    axios
+      .get(
+        `${apiBaseUrl}onecall?lat=${coords[0].lat}&lon=${coords[0].lon}&appid=${apiKey}`
+      )
+      .then(function (response) {
+        setWeather(response);
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   };
 
@@ -101,3 +104,4 @@ function App() {
 }
 
 export default App;
+

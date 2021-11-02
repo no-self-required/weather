@@ -1,12 +1,12 @@
-function locationTimeType( {weather, datebuilder}) {
+function locationTimeType( {weather, datebuilder, query}) {
   return (
     <div className="location-time-type">
     <div className="location">
-      {weather.city.name}, {weather.city.country}
+      {query}
     </div>
     <div className="date">{datebuilder(new Date())}</div>
     <div className="weatherType">
-      {weather.list[0].weather[0].main}
+      {weather.data.current.weather[0].description}
     </div>
   </div>
   );

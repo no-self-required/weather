@@ -28,7 +28,6 @@ function App() {
       const coords = await getCoordinatesBasedOn(query) // get coordinates based on city submitted by user
       const weather = await getWeatherBasedOn(coords) // get weather
       setWeather(weather)
-      setQuery("")
       console.log("WEATHER------", weather)
     } catch (e) {
       console.log("An error occured while trying to get coordinates or the weather", e.message)
@@ -74,10 +73,10 @@ function App() {
     <div className="app">
       <main>
         <Searchbox query={query} setQuery={setQuery} handleSubmission={handleSubmission} />
-        {typeof weather.city != "undefined" ? (
+        {typeof weather.data != "undefined" ? (
           <div className="info-box">
             <div className="topBox">
-              <LocationTimeType weather={weather} datebuilder={datebuilder} />
+              <LocationTimeType weather={weather} datebuilder={datebuilder} query={query}/>
               <TopWeatherInfo weather={weather} />
             </div>
             <Graph />

@@ -6,7 +6,7 @@ function TopWeatherInfo({ weather }) {
       <div>weather ico here</div>
       <div id="tempCFbox">
         <div className="temp">
-          {(weather.list[0].main.temp - 273.15).toFixed()} 
+          {(weather.data.current.temp - 273.15).toFixed()} 
         </div>
         <div id="CFswitch">°C | °F</div>
       </div>

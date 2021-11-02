@@ -16,37 +16,25 @@ const apiBaseCoords = `http://api.openweathermap.org/geo/1.0/`;
 
 function App() {
   const [query, setQuery] = useState("");
-  const [coords, setCoords] = useState([]);
   const [weather, setWeather] = useState([]);
 
-  const getCoords = (e) => {
-    if (e.key === "Enter") {
-      axios
-        .get(`${apiBaseCoords}direct?q=${query}&appid=${apiKey}`)
-        .then(function (response) {
-          setQuery("");
-          setCoords(response);
-          console.log("COORDS----", coords);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  };
+  const getCoordinatesBasedOn = (query) => axios.get(`${apiBaseCoords}direct?q=${query}&appid=${apiKey}`)
+  const getWeatherBasedOn = (coords) => axios.get(`${apiBaseUrl}onecall?lat=${coords.data[0].lat}&lon=${coords.data[0].lon}&appid=${apiKey}`)
 
-  const search = () => {
-    axios
-      .get(
-        `${apiBaseUrl}onecall?lat=${coords[0].lat}&lon=${coords[0].lon}&appid=${apiKey}`
-      )
-      .then(function (response) {
-        setWeather(response);
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  const handleSubmission = async (event) => {
+    if (event.key !== "Enter") { return; }
+
+    try{
+      const coords = await getCoordinatesBasedOn(query) // get coordinates based on city submitted by user
+      const weather = await getWeatherBasedOn(coords) // get weather
+      setWeather(weather)
+      setQuery("")
+      console.log("WEATHER------", weather)
+    } catch (e) {
+      console.log("An error occured while trying to get coordinates or the weather", e.message)
+    }
+
+  }
 
   const datebuilder = (d) => {
     let months = [
@@ -85,7 +73,7 @@ function App() {
   return (
     <div className="app">
       <main>
-        <Searchbox query={query} setQuery={setQuery} getCoords={getCoords} />
+        <Searchbox query={query} setQuery={setQuery} handleSubmission={handleSubmission} />
         {typeof weather.city != "undefined" ? (
           <div className="info-box">
             <div className="topBox">

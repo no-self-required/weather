@@ -1,4 +1,4 @@
-function Searchbox( {query, setQuery, getCoords}) {
+function Searchbox( {query, setQuery, handleSubmission}) {
   return (
     <div className="searchbox">
     <input
@@ -7,7 +7,7 @@ function Searchbox( {query, setQuery, getCoords}) {
       placeholder="Enter a city"
       onChange={(e) => setQuery(e.target.value)}
       value={query}
-      onKeyPress={getCoords}
+      onKeyPress={handleSubmission}
     ></input>
   </div>
   );

@@ -7,7 +7,6 @@ import "./styles/Weatherbox.scss";
 import Searchbox from "./components/Searchbox";
 import LocationTimeType from "./components/LocationTimeType";
 import TopWeatherInfo from "./components/TopWeatherInfo";
-import Graph from "./components/Graph";
 import SingleDay from "./components/SingleDay";
 
 const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
@@ -68,7 +67,7 @@ function App() {
 
     return `${day} ${date} ${month} ${year}`;
   };
-
+  
   return (
     <div className="app">
       <main>
@@ -79,7 +78,6 @@ function App() {
               <LocationTimeType weather={weather} datebuilder={datebuilder} query={query}/>
               <TopWeatherInfo weather={weather} />
             </div>
-            <Graph />
             <SingleDay />
           </div>
         ) : (

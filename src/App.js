@@ -17,16 +17,16 @@ function App() {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState([]);
 
-  useEffect(() => {
-    const setDefaultCity = async () => {
-      const defaultCity = await axios.get(
-        `${apiBaseUrl}onecall?lat=43.651070&lon=-79.3832&appid=${apiKey}`
-      );
-      setWeather(defaultCity);
-      console.log("DEFAULT WEATHER---", weather);
-    };
-    setDefaultCity();
-  });
+  // useEffect(() => {
+  //   const setDefaultCity = async () => {
+  //     const defaultCity = await axios.get(
+  //       `${apiBaseUrl}onecall?lat=43.651070&lon=-79.3832&appid=${apiKey}`
+  //     );
+  //     setWeather(defaultCity);
+  //     console.log("DEFAULT WEATHER---", weather);
+  //   };
+  //   setDefaultCity();
+  // });
 
   const getCoordinatesBasedOn = (query) =>
     axios.get(`${apiBaseCoords}direct?q=${query}&appid=${apiKey}`);
@@ -87,48 +87,59 @@ function App() {
     return `${day} ${date} ${month} ${year}`;
   };
   
-  const daily = weather.data.daily.map((i) => {
+  const daily = null
+
+  if (weather.data) {
+    const daily = weather.data.daily.map((i) => {
+      return (
+        <div>
+          <SingleDay
+            temp={i.temp.day}
+            humidity={i.humidity}
+            wind={i.wind_speed}
+            datebuilder={datebuilder}
+            query={query}
+            max={i.temp.max}
+            min={i.temp.min}
+          />
+        </div>
+      );
+    }); 
+  }
+
+  if (!weather) {
     return (
-      <div>
-        <SingleDay
-          temp={i.temp.day}
-          humidity={i.humidity}
-          wind={i.wind_speed}
-          datebuilder={datebuilder}
-          query={query}
-          max={i.temp.max}
-          min={i.temp.min}
-        />
+      <div></div>
+    )
+  }
+  else {
+    return (
+      <div className="app">
+        <main>
+          <Searchbox
+            query={query}
+            setQuery={setQuery}
+            handleSubmission={handleSubmission}
+          />
+          {typeof weather.data != "undefined" ? (
+            <div className="info-box">
+              <div className="topBox">
+                <LocationTimeType
+                  weather={weather}
+                  datebuilder={datebuilder}
+                  query={query}
+                />
+                <TopWeatherInfo weather={weather} />
+              </div>
+              {daily}
+            </div>
+          ) : (
+            ""
+          )}
+        </main>
       </div>
     );
-  });
-
-  return (
-    <div className="app">
-      <main>
-        <Searchbox
-          query={query}
-          setQuery={setQuery}
-          handleSubmission={handleSubmission}
-        />
-        {typeof weather.data != "undefined" ? (
-          <div className="info-box">
-            <div className="topBox">
-              <LocationTimeType
-                weather={weather}
-                datebuilder={datebuilder}
-                query={query}
-              />
-              <TopWeatherInfo weather={weather} />
-            </div>
-            {daily}
-          </div>
-        ) : (
-          ""
-        )}
-      </main>
-    </div>
-  );
+  }
 }
 
 export default App;

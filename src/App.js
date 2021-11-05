@@ -87,7 +87,6 @@ function App() {
     return `${day} ${date} ${month} ${year}`;
   };
   
-  const daily = null
 
   if (weather.data) {
     const daily = weather.data.daily.map((i) => {
@@ -107,12 +106,18 @@ function App() {
     }); 
   }
 
-  if (!weather) {
+  const daily = null;
+  
+  if (!weather.data) {
     return (
-      <div></div>
+      <Searchbox
+      query={query}
+      setQuery={setQuery}
+      handleSubmission={handleSubmission}
+    />
     )
   }
-  else {
+  else if (weather.data) {
     return (
       <div className="app">
         <main>
@@ -143,3 +148,4 @@ function App() {
 }
 
 export default App;
+

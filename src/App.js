@@ -17,16 +17,16 @@ function App() {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState([]);
 
-  // useEffect(() => {
-  //   const setDefaultCity = async () => {
-  //     const defaultCity = await axios.get(
-  //       `${apiBaseUrl}onecall?lat=43.651070&lon=-79.3832&appid=${apiKey}`
-  //     );
-  //     setWeather(defaultCity);
-  //     console.log("DEFAULT WEATHER---", weather);
-  //   };
-  //   setDefaultCity();
-  // });
+  useEffect(() => {
+    const setDefaultCity = async () => {
+      const defaultCity = await axios.get(
+        `${apiBaseUrl}onecall?lat=43.651070&lon=-79.3832&appid=${apiKey}`
+      );
+      setWeather(defaultCity);
+      console.log("DEFAULT WEATHER---", weather);
+    };
+    setDefaultCity();
+  }, []);
 
   const getCoordinatesBasedOn = (query) =>
     axios.get(`${apiBaseCoords}direct?q=${query}&appid=${apiKey}`);

@@ -87,6 +87,7 @@ function App() {
     return `${day} ${date} ${month} ${year}`;
   };
   
+  let daily;
 
   if (weather.data) {
     const daily = weather.data.daily.map((i) => {
@@ -105,9 +106,7 @@ function App() {
       );
     }); 
   }
-
-  const daily = null;
-  
+ 
   if (!weather.data) {
     return (
       <Searchbox

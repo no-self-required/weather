@@ -1,4 +1,4 @@
-import "./App.css";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -86,7 +86,7 @@ function App() {
 
     return `${day} ${date} ${month} ${year}`;
   };
-  
+
   let daily;
 
   if (weather.data) {
@@ -104,47 +104,35 @@ function App() {
           />
         </div>
       );
-    }); 
+    });
   }
- 
-  if (!weather.data) {
-    return (
-      <Searchbox
-      query={query}
-      setQuery={setQuery}
-      handleSubmission={handleSubmission}
-    />
-    )
-  }
-  else if (weather.data) {
-    return (
-      <div className="app">
-        <main>
-          <Searchbox
-            query={query}
-            setQuery={setQuery}
-            handleSubmission={handleSubmission}
-          />
-          {typeof weather.data != "undefined" ? (
-            <div className="info-box">
-              <div className="topBox">
-                <LocationTimeType
-                  weather={weather}
-                  datebuilder={datebuilder}
-                  query={query}
-                />
-                <TopWeatherInfo weather={weather} />
-              </div>
-              {daily}
+
+  return (
+    <div className="app">
+      <main>
+        <Searchbox
+          query={query}
+          setQuery={setQuery}
+          handleSubmission={handleSubmission}
+        />
+        {typeof weather.data != "undefined" ? (
+          <div className="info-box">
+            <div className="topBox">
+              <LocationTimeType
+                weather={weather}
+                datebuilder={datebuilder}
+                query={query}
+              />
+              <TopWeatherInfo weather={weather} />
             </div>
-          ) : (
-            ""
-          )}
-        </main>
-      </div>
-    );
-  }
+            {daily}
+          </div>
+        ) : (
+          ""
+        )}
+      </main>
+    </div>
+  );
 }
 
 export default App;
-

@@ -1,6 +1,26 @@
-function SingleDay() {
+function SingleDay(
+  temp,
+  humidity,
+  wind,
+  query,
+  max,
+  min
+) {
   return (
-    <div className="singleDay">Day, ico, high, low</div>
+    <div className="singleDay">
+      <div>
+        Day
+      </div>
+      <div>
+        ico
+      </div>
+      <div>
+        high
+      </div>
+      <div>
+        low
+      </div>
+    </div>
   )
 }
 

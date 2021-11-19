@@ -15,14 +15,15 @@ const apiBaseCoords = `http://api.openweathermap.org/geo/1.0/`;
 
 function App() {
   const [query, setQuery] = useState("Toronto");
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState();
+  //weather is daily array
 
   useEffect(() => {
     const setDefaultCity = async () => {
       const defaultCity = await axios.get(
         `${apiBaseUrl}onecall?lat=43.651070&lon=-79.3832&appid=${apiKey}`
       );
-      setWeather(defaultCity);
+      setWeather(defaultCity.data.daily);
     };
     setDefaultCity();
   }, []);
@@ -43,7 +44,7 @@ function App() {
     try {
       const coords = await getCoordinatesBasedOn(query); // get coordinates based on city submitted by user
       const weather = await getWeatherBasedOn(coords); // get weather
-      setWeather(weather);
+      setWeather(weather.data.daily);
       console.log("WEATHER------", weather);
     } catch (e) {
       console.log(
@@ -89,10 +90,13 @@ function App() {
 
   let daily;
 
-  if (weather.data) {
-    daily = weather.data.daily.map((day, key) => {
+  console.log("WEATHER outside map", weather)
+
+  if (weather) {
+    console.log("WEATHER inside map", weather)
+    daily = weather.map((day, key) => {
       return (
-        <div key={key}>
+        <div className="daily" key={key}>
           <SingleDay
             temp={day.temp.day}
             humidity={day.humidity}
@@ -115,17 +119,18 @@ function App() {
           setQuery={setQuery}
           handleSubmission={handleSubmission}
         />
-        {typeof weather.data != "undefined" ? (
+        {typeof weather != "undefined" ? (
           <div className="info-box">
             <div className="topBox">
               <LocationTimeType
                 weather={weather}
-                datebuilder={datebuilder}
                 query={query}
               />
               <TopWeatherInfo weather={weather} />
             </div>
-            {daily}
+            <div className="daily-container">
+              {daily}
+            </div>           
           </div>
         ) : (
           ""

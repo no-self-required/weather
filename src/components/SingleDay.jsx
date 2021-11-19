@@ -1,24 +1,22 @@
+import dayjs from "dayjs";
+
 function SingleDay(
-  temp,
-  humidity,
-  wind,
-  query,
-  max,
-  min
+  props
 ) {
+  const currentDay = dayjs(props.date * 1000).format("dddd");
   return (
     <div className="singleDay">
       <div>
-        Day
+        {currentDay}
       </div>
       <div>
-        ico
+        {props.type}
       </div>
       <div>
-        high
+        max: {(props.max - 273.15).toFixed()}°
       </div>
       <div>
-        low
+        min: {(props.min - 273.15).toFixed()}°
       </div>
     </div>
   )

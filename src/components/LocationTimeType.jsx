@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 
 function locationTimeType( {weather, query}) {
 
-  const formatedDate = dayjs(weather[0].dt * 1000).format("MMMM, DD YYYY");
+  const formatedDate = dayjs(weather[0].dt * 1000).format("dddd");
   return (
     <div className="location-time-type">
     <div className="location">

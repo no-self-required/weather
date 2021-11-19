@@ -11,7 +11,7 @@ function TopWeatherInfo({ weather }) {
         <div id="CFswitch">°C | °F</div>
       </div>
       <div id="sum-box">
-        <div>Precipitation : {weather[0].pop * 100}%</div>
+        <div>Precipitation : {(weather[0].pop * 100).toFixed()}%</div>
         <div>Humidity : {weather[0].humidity}%</div>
         <div>Wind : {(weather[0].wind_speed * 3.6).toFixed()} km/h</div>
       </div>

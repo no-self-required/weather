@@ -14,7 +14,7 @@ const apiBaseUrl = `https://api.openweathermap.org/data/2.5/`;
 const apiBaseCoords = `http://api.openweathermap.org/geo/1.0/`;
 
 function App() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("Toronto");
   const [weather, setWeather] = useState([]);
 
   useEffect(() => {
@@ -23,13 +23,13 @@ function App() {
         `${apiBaseUrl}onecall?lat=43.651070&lon=-79.3832&appid=${apiKey}`
       );
       setWeather(defaultCity);
-      console.log("DEFAULT WEATHER---", weather);
     };
     setDefaultCity();
   }, []);
 
   const getCoordinatesBasedOn = (query) =>
     axios.get(`${apiBaseCoords}direct?q=${query}&appid=${apiKey}`);
+    
   const getWeatherBasedOn = (coords) =>
     axios.get(
       `${apiBaseUrl}onecall?lat=${coords.data[0].lat}&lon=${coords.data[0].lon}&appid=${apiKey}`
@@ -90,17 +90,17 @@ function App() {
   let daily;
 
   if (weather.data) {
-    const daily = weather.data.daily.map((i) => {
+    daily = weather.data.daily.map((day, key) => {
       return (
-        <div>
+        <div key={key}>
           <SingleDay
-            temp={i.temp.day}
-            humidity={i.humidity}
-            wind={i.wind_speed}
+            temp={day.temp.day}
+            humidity={day.humidity}
+            wind={day.wind_speed}
             datebuilder={datebuilder}
             query={query}
-            max={i.temp.max}
-            min={i.temp.min}
+            max={day.temp.max}
+            min={day.temp.min}
           />
         </div>
       );

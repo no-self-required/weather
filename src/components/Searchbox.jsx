@@ -1,4 +1,5 @@
-function Searchbox( {query, setQuery, handleSubmission}) {
+function Searchbox( {setQuery, handleSubmission}) {
+  
   return (
     <div className="searchbox">
     <input
@@ -6,7 +7,6 @@ function Searchbox( {query, setQuery, handleSubmission}) {
       className="search-bar"
       placeholder="Enter a city"
       onChange={(e) => setQuery(e.target.value)}
-      value={query}
       onKeyPress={handleSubmission}
     ></input>
   </div>

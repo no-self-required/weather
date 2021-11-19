@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 function SingleDay(
   props
 ) {
+
   const currentDay = dayjs(props.date * 1000).format("dddd");
   return (
     <div className="singleDay">

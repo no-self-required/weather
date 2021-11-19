@@ -89,6 +89,10 @@ function App() {
   //   return `${day} ${date} ${month} ${year}`;
   // };
 
+  function setWeatherState () {
+    
+  }
+
   let daily;
 
   // console.log("WEATHER outside map", weather)
@@ -97,7 +101,7 @@ function App() {
     // console.log("WEATHER inside map", weather)
     daily = weather.map((day, key) => {
       return (
-        <div className="daily" >
+        <div className="daily" key={key}>
           <SingleDay
             date={day.dt}
             type={day.weather[0].main}
